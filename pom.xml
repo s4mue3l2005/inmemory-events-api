@@ -12,7 +12,7 @@
 	<artifactId>inmemory-events-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>inmemory-events-api</name>
-	<description>Catálogo In-Memory de Eventos y Venues (REST + Arquitectura por Capas)</description>
+	<description>Catálogo In-Memory de Eventos y Venues (REST + Arquitectura por Capas).</description>
 	<url/>
 	<licenses>
 		<license/>
