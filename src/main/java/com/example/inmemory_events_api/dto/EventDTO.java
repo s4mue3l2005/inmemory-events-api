@@ -1,0 +1,15 @@
+package com.example.inmemory_events_api.dto;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class EventDTO {
+    private Long id;
+    private String name;
+    private String date;
+    private String venue;
+}
