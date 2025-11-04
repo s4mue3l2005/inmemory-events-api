@@ -1,4 +1,4 @@
-package com.example.inmemory_events_api.service;
+package com.example.inmemoryeventsapi.service;
 
 import com.example.inmemoryeventsapi.dto.VenueDTO;
 import org.springframework.stereotype.Service;

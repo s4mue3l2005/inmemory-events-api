@@ -1,4 +1,4 @@
-package com.example.inmemory_events_api.controller;
+package com.example.inmemoryeventsapi.controller;
 
 import com.example.inmemoryeventsapi.dto.EventDTO;
 import com.example.inmemoryeventsapi.service.EventService;
