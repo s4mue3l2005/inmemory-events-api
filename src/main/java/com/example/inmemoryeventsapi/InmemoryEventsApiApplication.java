@@ -1,4 +1,4 @@
-package com.example.inmemory_events_api;
+package com.example.inmemoryeventsapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class InmemoryEventsApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InmemoryEventsApiApplication.class, args);
+        SpringApplication.run(InmemoryEventsApiApplication.class, args);
 	}
 
 }
