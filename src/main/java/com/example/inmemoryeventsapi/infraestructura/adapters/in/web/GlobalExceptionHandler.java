@@ -1,4 +1,4 @@
-package com.example.inmemoryeventsapi.exception;
+package com.example.inmemoryeventsapi.infraestructura.adapters.in.web;
 
 import com.example.inmemoryeventsapi.dominio.exception.BadRequestException;
 import com.example.inmemoryeventsapi.dominio.exception.ConflictException;
@@ -14,6 +14,10 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Manejador global de excepciones para la capa de infraestructura web.
+ * Maneja las excepciones del dominio y las convierte a respuestas HTTP.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -77,3 +81,4 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 }
+

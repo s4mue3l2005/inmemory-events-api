@@ -8,5 +8,5 @@ import java.util.Optional;
  * Puerto de entrada para obtener un evento por ID.
  */
 public interface ObtenerEventoUseCase {
-    Optional<Event> ejecutar(Long id);
+    Optional<Event> obtener(Long id);
 }

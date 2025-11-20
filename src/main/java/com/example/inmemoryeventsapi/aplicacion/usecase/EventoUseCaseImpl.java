@@ -4,11 +4,11 @@ import com.example.inmemoryeventsapi.dominio.exception.BadRequestException;
 import com.example.inmemoryeventsapi.dominio.exception.ConflictException;
 import com.example.inmemoryeventsapi.dominio.exception.NotFoundException;
 import com.example.inmemoryeventsapi.dominio.model.Event;
+import com.example.inmemoryeventsapi.dominio.model.Page;
+import com.example.inmemoryeventsapi.dominio.model.Pageable;
 import com.example.inmemoryeventsapi.dominio.ports.in.*;
 import com.example.inmemoryeventsapi.dominio.ports.out.EventoRepositoryPort;
 import com.example.inmemoryeventsapi.dominio.ports.out.VenueRepositoryPort;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -32,6 +32,7 @@ public class EventoUseCaseImpl implements
         this.venueRepository = venueRepository;
     }
 
+    // CrearEventoUseCase
     @Override
     public Event ejecutar(Event event) {
         validarEvento(event);
@@ -44,6 +45,7 @@ public class EventoUseCaseImpl implements
         return eventoRepository.guardar(event);
     }
 
+    // ActualizarEventoUseCase
     @Override
     public Event ejecutar(Long id, Event event) {
         validarEvento(event);
@@ -73,19 +75,22 @@ public class EventoUseCaseImpl implements
         return eventoRepository.guardar(eventoExistente);
     }
 
+    // EliminarEventoUseCase
     @Override
-    public void ejecutar(Long id) {
+    public void eliminar(Long id) {
         if (!eventoRepository.existePorId(id)) {
             throw new NotFoundException("Evento con ID " + id + " no encontrado");
         }
         eventoRepository.eliminar(id);
     }
 
+    // ObtenerEventoUseCase
     @Override
-    public Optional<Event> ejecutar(Long id) {
+    public Optional<Event> obtener(Long id) {
         return eventoRepository.buscarPorId(id);
     }
 
+    // ListarEventosUseCase
     @Override
     public Page<Event> ejecutar(Pageable pageable) {
         return eventoRepository.buscarTodos(pageable);

@@ -1,8 +1,8 @@
 package com.example.inmemoryeventsapi.dominio.ports.out;
 
 import com.example.inmemoryeventsapi.dominio.model.Event;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.example.inmemoryeventsapi.dominio.model.Page;
+import com.example.inmemoryeventsapi.dominio.model.Pageable;
 
 import java.time.LocalDate;
 import java.util.Optional;

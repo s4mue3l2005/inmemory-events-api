@@ -46,7 +46,7 @@ public class VenueUseCaseImpl implements
     }
 
     @Override
-    public void ejecutar(Long id) {
+    public void eliminar(Long id) {
         if (!venueRepository.existePorId(id)) {
             throw new NotFoundException("Venue con ID " + id + " no encontrado");
         }
@@ -54,7 +54,7 @@ public class VenueUseCaseImpl implements
     }
 
     @Override
-    public Optional<Venue> ejecutar(Long id) {
+    public Optional<Venue> obtener(Long id) {
         return venueRepository.buscarPorId(id);
     }
 

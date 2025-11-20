@@ -1,4 +1,4 @@
-package com.example.inmemoryeventsapi.entity;
+package com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,9 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 @Table(name = "events", uniqueConstraints = {
-    @UniqueConstraint(name = "uk_event_name", columnNames = "name")
+        @UniqueConstraint(name = "uk_event_name", columnNames = "name")
 })
-public class Event {
+public class EventEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,11 +27,11 @@ public class Event {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "venue_id")
-    private Venue venue;
+    private VenueEntity venue;
 
     private Integer capacity;
     private Double price;
-    
+
     private String category;
     private String city;
 }

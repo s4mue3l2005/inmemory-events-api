@@ -1,4 +1,4 @@
-package com.example.inmemoryeventsapi.entity;
+package com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "venues")
-public class Venue {
+public class VenueEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

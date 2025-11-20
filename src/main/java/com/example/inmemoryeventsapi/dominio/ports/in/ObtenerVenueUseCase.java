@@ -8,5 +8,5 @@ import java.util.Optional;
  * Puerto de entrada para obtener un venue por ID.
  */
 public interface ObtenerVenueUseCase {
-    Optional<Venue> ejecutar(Long id);
+    Optional<Venue> obtener(Long id);
 }
