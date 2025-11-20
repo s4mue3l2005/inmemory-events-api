@@ -25,7 +25,7 @@ public class EventController {
             @RequestParam(required = false) String fechaInicio,
             @PageableDefault(size = 10, sort = "date") Pageable pageable
     ) {
-        // Si hay filtros, usar el método con filtros
+        // Si hay filtros, usar el método con filtro
         if (city != null || category != null || fechaInicio != null) {
             return ResponseEntity.ok(service.findByFilters(city, category, fechaInicio, pageable));
         }
