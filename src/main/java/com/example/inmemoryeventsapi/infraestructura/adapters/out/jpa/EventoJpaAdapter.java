@@ -9,7 +9,9 @@ import com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.entity.Ven
 import com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.mapper.EventoMapper;
 import com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.mapper.PageMapper;
 import com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.repository.EventJpaRepository;
+import com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.repository.EventSpecifications;
 import com.example.inmemoryeventsapi.infraestructura.adapters.out.jpa.repository.VenueJpaRepository;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -65,7 +67,8 @@ public class EventoJpaAdapter implements EventoRepositoryPort {
     @Override
     public Page<Event> buscarConFiltros(String city, String category, LocalDate fechaInicio, Pageable pageable) {
         org.springframework.data.domain.Pageable springPageable = PageMapper.toSpring(pageable);
-        org.springframework.data.domain.Page<EventEntity> entities = eventJpaRepository.findByFilters(city, category, fechaInicio, springPageable);
+        Specification<EventEntity> spec = EventSpecifications.withFilters(city, category, fechaInicio);
+        org.springframework.data.domain.Page<EventEntity> entities = eventJpaRepository.findAll(spec, springPageable);
         return PageMapper.toDomain(entities.map(eventoMapper::toDomain), pageable);
     }
 
