@@ -1,200 +1,154 @@
 # In-Memory Events API
 
-API REST para gestión de eventos y venues implementada con **Arquitectura Hexagonal (Ports & Adapters)**.
+[![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.5.7-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-## 📋 Descripción
+REST API for event and venue management implemented with **Hexagonal Architecture (Ports & Adapters)**.
 
-Este proyecto es un catálogo de eventos y venues que demuestra la implementación de la arquitectura hexagonal, separando completamente el núcleo de negocio de los frameworks externos (Spring, JPA, etc.), logrando independencia tecnológica y facilitando las pruebas unitarias.
+## 📋 Description
 
-## 🏗️ Arquitectura Hexagonal
+This project is an event and venue catalog that demonstrates the implementation of Hexagonal Architecture, completely separating the business core from external frameworks (Spring, JPA, etc.), achieving technological independence and facilitating unit testing.
 
-El proyecto está organizado siguiendo los principios de la arquitectura hexagonal (Ports & Adapters):
+## ✨ Features
 
-### Estructura de Paquetes
+-   **Hexagonal Architecture**: Clear separation between Domain, Application, and Infrastructure.
+-   **RESTful API**: Complete CRUD for Events and Venues.
+-   **In-Memory Database**: Uses H2 for easy setup and testing.
+-   **DTO Mapping**: Efficient mapping using MapStruct.
+-   **OpenAPI Documentation**: Integrated Swagger UI.
+-   **Pagination**: Domain-centric pagination implementation.
+
+## 🛠️ Tech Stack
+
+-   **Java 17**
+-   **Spring Boot 3.5.7**
+-   **Spring Data JPA**
+-   **H2 Database** (in-memory)
+-   **MapStruct 1.5.5**
+-   **Lombok**
+-   **SpringDoc OpenAPI**
+
+## 🏗️ Architecture
+
+The project is organized following the Hexagonal Architecture (Ports & Adapters) principles:
+
+### Package Structure
 
 ```
 com.example.inmemoryeventsapi/
-├── dominio/                          # Núcleo de negocio (sin dependencias externas)
-│   ├── model/                        # Entidades de dominio puras
-│   │   ├── Event.java
-│   │   ├── Venue.java
-│   │   ├── Page.java                 # Clase de dominio para paginación
-│   │   └── Pageable.java             # Clase de dominio para parámetros de paginación
+├── dominio/                          # Business Core (No external dependencies)
+│   ├── model/                        # Pure Domain Entities
 │   ├── ports/
-│   │   ├── in/                       # Puertos de entrada (casos de uso)
-│   │   │   ├── CrearEventoUseCase.java
-│   │   │   ├── ActualizarEventoUseCase.java
-│   │   │   ├── EliminarEventoUseCase.java
-│   │   │   ├── ObtenerEventoUseCase.java
-│   │   │   └── ListarEventosUseCase.java
-│   │   └── out/                      # Puertos de salida (repositorios)
-│   │       ├── EventoRepositoryPort.java
-│   │       └── VenueRepositoryPort.java
-│   └── exception/                     # Excepciones de dominio
-│       ├── BadRequestException.java
-│       ├── ConflictException.java
-│       └── NotFoundException.java
+│   │   ├── in/                       # Input Ports (Use Cases)
+│   │   └── out/                      # Output Ports (Repositories)
+│   └── exception/                    # Domain Exceptions
 │
-├── aplicacion/                       # Capa de aplicación
-│   └── usecase/                      # Implementación de casos de uso
-│       ├── EventoUseCaseImpl.java
-│       └── VenueUseCaseImpl.java
+├── aplicacion/                       # Application Layer
+│   └── usecase/                      # Use Case Implementations
 │
-└── infraestructura/                  # Adaptadores (frameworks externos)
+└── infraestructura/                  # Adapters (External Frameworks)
     ├── adapters/
-    │   ├── in/                       # Adaptadores de entrada
-    │   │   └── web/                  # Adaptador REST
-    │   │       ├── EventoRestAdapter.java
-    │   │       ├── VenueRestAdapter.java
-    │   │       ├── GlobalExceptionHandler.java
-    │   │       ├── dto/               # DTOs para la API
-    │   │       └── mapper/            # Mappers DTO ↔ Dominio
-    │   └── out/                      # Adaptadores de salida
-    │       └── jpa/                  # Adaptador JPA
-    │           ├── EventoJpaAdapter.java
-    │           ├── VenueJpaAdapter.java
-    │           ├── entity/            # Entidades JPA
-    │           ├── repository/        # Repositorios JPA
-    │           └── mapper/            # Mappers Entity ↔ Dominio
-    └── config/                       # Configuración de Spring
-        └── BeanConfiguration.java
+    │   ├── in/                       # Input Adapters (REST)
+    │   └── out/                      # Output Adapters (JPA)
+    └── config/                       # Spring Configuration
 ```
 
-### Principios Aplicados
+### Key Principles
 
-1. **Independencia Tecnológica**: El dominio no tiene dependencias de Spring, JPA u otros frameworks.
-2. **Separación de Responsabilidades**: Cada capa tiene una responsabilidad clara.
-3. **Inversión de Dependencias**: El dominio define interfaces (puertos) que son implementadas por la infraestructura.
-4. **Equivalencia Funcional**: La funcionalidad se mantiene igual antes y después del refactor.
+1.  **Technological Independence**: The domain has no dependencies on Spring, JPA, or other frameworks.
+2.  **Separation of Concerns**: Each layer has a clear responsibility.
+3.  **Dependency Inversion**: The domain defines interfaces (ports) that are implemented by the infrastructure.
 
-### Flujo de Datos
+### Data Flow
 
 ```
-Cliente HTTP
+HTTP Client
     ↓
-EventoRestAdapter (Adaptador de Entrada)
+EventoRestAdapter (Input Adapter)
     ↓
-EventoUseCaseImpl (Caso de Uso)
+EventoUseCaseImpl (Use Case)
     ↓
-EventoRepositoryPort (Puerto)
+EventoRepositoryPort (Port)
     ↓
-EventoJpaAdapter (Adaptador de Salida)
+EventoJpaAdapter (Output Adapter)
     ↓
 EventJpaRepository (JPA)
     ↓
-Base de Datos
+Database
 ```
 
-## 🛠️ Tecnologías Utilizadas
+## � Getting Started
 
-- **Java 17**
-- **Spring Boot 3.5.7**
-- **Spring Data JPA**
-- **H2 Database** (in-memory)
-- **MapStruct 1.5.5** (mapeo entre capas)
-- **Lombok**
-- **SpringDoc OpenAPI** (documentación de API)
+### Prerequisites
 
-## 📦 Dependencias Principales
+-   Java 17 or higher
+-   Maven 3.6+
 
-- `spring-boot-starter-web`: Framework web
-- `spring-boot-starter-data-jpa`: Persistencia JPA
-- `mapstruct`: Mapeo entre objetos
-- `lombok`: Reducción de boilerplate
-- `h2`: Base de datos en memoria
-- `springdoc-openapi`: Documentación Swagger/OpenAPI
+### Installation & Running
 
-## 🚀 Ejecución
+1.  **Clone the repository** (if applicable) or navigate to the project directory.
 
-### Requisitos
+2.  **Build the project**:
+    ```bash
+    mvn clean install
+    ```
 
-- Java 17 o superior
-- Maven 3.6+
+3.  **Run the application**:
+    ```bash
+    mvn spring-boot:run
+    ```
 
-### Compilar y Ejecutar
+The application will be available at: `http://localhost:8080`
 
-```bash
-# Compilar el proyecto
-mvn clean install
+## 📖 API Documentation
 
-# Ejecutar la aplicación
-mvn spring-boot:run
-```
+Once the application is running, you can access the Swagger documentation at:
 
-La aplicación estará disponible en: `http://localhost:8080`
+-   **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+-   **OpenAPI JSON**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
 
-### Documentación de API
+### Key Endpoints
 
-Una vez ejecutada la aplicación, la documentación Swagger está disponible en:
-- **Swagger UI**: http://localhost:8080/swagger-ui.html
-- **OpenAPI JSON**: http://localhost:8080/v3/api-docs
+#### Events
+-   `GET /events` - List events (with pagination)
+-   `GET /events/{id}` - Get event by ID
+-   `POST /events` - Create event
+-   `PUT /events/{id}` - Update event
+-   `DELETE /events/{id}` - Delete event
 
-## 📡 Endpoints
+#### Venues
+-   `GET /venues` - List venues
+-   `GET /venues/{id}` - Get venue by ID
+-   `POST /venues` - Create venue
+-   `PUT /venues/{id}` - Update venue
+-   `DELETE /venues/{id}` - Delete venue
 
-### Eventos
+## 🧪 Testing
 
-- `GET /events` - Listar eventos (con paginación y filtros)
-- `GET /events/{id}` - Obtener evento por ID
-- `POST /events` - Crear evento
-- `PUT /events/{id}` - Actualizar evento
-- `DELETE /events/{id}` - Eliminar evento
-
-### Venues
-
-- `GET /venues` - Listar venues
-- `GET /venues/{id}` - Obtener venue por ID
-- `POST /venues` - Crear venue
-- `PUT /venues/{id}` - Actualizar venue
-- `DELETE /venues/{id}` - Eliminar venue
-
-## 🔄 Mapeo con MapStruct
-
-El proyecto utiliza MapStruct para realizar la conversión entre:
-
-1. **DTO ↔ Dominio**: En los adaptadores REST (`EventoDTOMapper`, `VenueDTOMapper`)
-2. **Entity ↔ Dominio**: En los adaptadores JPA (`EventoMapper`, `VenueMapper`)
-
-Esto garantiza que:
-- El dominio permanece puro (sin anotaciones JPA)
-- Las conversiones son type-safe y eficientes
-- El código de mapeo se genera en tiempo de compilación
-
-## ✅ Criterios de Aceptación Cumplidos
-
-- ✅ La aplicación mantiene el mismo comportamiento funcional que antes del refactor
-- ✅ El dominio está completamente desacoplado de frameworks o tecnología de persistencia
-- ✅ Se evidencia el uso correcto de puertos y adaptadores
-- ✅ MapStruct realiza la conversión entre entidad y dominio
-- ✅ La API REST continúa funcionando sin ruptura de endpoints
-- ✅ La documentación del proyecto refleja la nueva arquitectura
-
-## 🧪 Pruebas
+To run the unit and integration tests:
 
 ```bash
-# Ejecutar todas las pruebas
 mvn test
 ```
 
-## 📝 Notas de Implementación
+## � Implementation Notes
 
-### Paginación Independiente
+### MapStruct Mapping
+The project uses MapStruct to convert between:
+1.  **DTO ↔ Domain**: In REST adapters.
+2.  **Entity ↔ Domain**: In JPA adapters.
 
-Para mantener el dominio libre de dependencias de Spring, se crearon clases de dominio para paginación:
-- `dominio.model.Page<T>`: Representa una página de resultados
-- `dominio.model.Pageable`: Representa parámetros de paginación
+This ensures that:
+-   The domain remains pure (no JPA annotations).
+-   Conversions are type-safe and efficient.
 
-Los adaptadores (REST y JPA) se encargan de convertir entre estas clases de dominio y las clases de Spring Data (`org.springframework.data.domain.Page` y `Pageable`).
+### Domain Pagination
+To keep the domain free of Spring dependencies, custom `Page` and `Pageable` classes are used in the domain layer, which are mapped to Spring Data's equivalents in the adapters.
 
-### Manejo de Excepciones
+### Exception Handling
+Domain exceptions (`NotFoundException`, `BadRequestException`, `ConflictException`) are caught by the `GlobalExceptionHandler` in the web infrastructure layer and converted into appropriate HTTP responses.
 
-Las excepciones de dominio (`NotFoundException`, `BadRequestException`, `ConflictException`) son capturadas por el `GlobalExceptionHandler` en la capa de infraestructura web y convertidas a respuestas HTTP apropiadas.
+## � Author
 
-## 📚 Referencias
-
-- [Arquitectura Hexagonal (Alistair Cockburn)](https://alistair.cockburn.us/hexagonal-architecture/)
-- [Ports & Adapters Pattern](https://www.hexagonalarchitecture.net/)
-- [MapStruct Documentation](https://mapstruct.org/)
-
-## 👥 Autor
-
-Proyecto desarrollado como parte de la implementación de arquitectura hexagonal con equivalencia funcional.
+Project developed as part of a Hexagonal Architecture implementation with functional equivalence.
