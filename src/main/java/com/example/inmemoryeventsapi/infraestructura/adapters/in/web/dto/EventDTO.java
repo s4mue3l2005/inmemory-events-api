@@ -6,9 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.example.inmemoryeventsapi.infraestructura.adapters.in.web.dto.validation.ValidDateRange;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ValidDateRange
 public class EventDTO {
     private Long id;
 
@@ -17,6 +20,8 @@ public class EventDTO {
 
     @NotNull(message = "La fecha del evento es requerida")
     private String date; // formato: yyyy-MM-dd
+
+    private String endDate; // formato: yyyy-MM-dd
 
     private Long venueId;
     private Integer capacity;

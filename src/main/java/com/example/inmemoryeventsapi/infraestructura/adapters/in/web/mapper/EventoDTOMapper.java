@@ -12,8 +12,10 @@ import org.mapstruct.Mapping;
 public interface EventoDTOMapper {
 
     @Mapping(target = "date", expression = "java(domain.getDate() != null ? domain.getDate().toString() : null)")
+    @Mapping(target = "endDate", expression = "java(domain.getEndDate() != null ? domain.getEndDate().toString() : null)")
     EventDTO toDTO(Event domain);
 
     @Mapping(target = "date", expression = "java(dto.getDate() != null ? java.time.LocalDate.parse(dto.getDate()) : null)")
+    @Mapping(target = "endDate", expression = "java(dto.getEndDate() != null ? java.time.LocalDate.parse(dto.getEndDate()) : null)")
     Event toDomain(EventDTO dto);
 }

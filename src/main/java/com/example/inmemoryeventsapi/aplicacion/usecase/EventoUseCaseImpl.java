@@ -70,6 +70,7 @@ public class EventoUseCaseImpl implements
         // Actualizar campos
         eventoExistente.setName(event.getName());
         eventoExistente.setDate(event.getDate());
+        eventoExistente.setEndDate(event.getEndDate());
         eventoExistente.setCapacity(event.getCapacity());
         eventoExistente.setPrice(event.getPrice());
         eventoExistente.setCategory(event.getCategory());
@@ -132,6 +133,9 @@ public class EventoUseCaseImpl implements
         // Validar que la fecha sea futura
         if (event.getDate().isBefore(LocalDate.now())) {
             throw new BadRequestException("La fecha del evento debe ser futura");
+        }
+        if (event.getEndDate() != null && event.getEndDate().isBefore(event.getDate())) {
+            throw new BadRequestException("La fecha de fin no puede ser anterior a la fecha de inicio");
         }
         if (event.getVenueId() != null) {
             if (!venueRepository.existePorId(event.getVenueId())) {

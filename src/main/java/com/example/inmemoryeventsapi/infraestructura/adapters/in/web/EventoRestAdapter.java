@@ -48,10 +48,10 @@ public class EventoRestAdapter {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String fechaInicio,
             @PageableDefault(size = 10, sort = "date") org.springframework.data.domain.Pageable springPageable) {
-        
+
         // Convertir Pageable de Spring a dominio
         Pageable domainPageable = PageMapper.toDomain(springPageable);
-        
+
         Page<Event> events;
 
         // Si hay filtros, usar el método con filtro
@@ -65,12 +65,11 @@ public class EventoRestAdapter {
         List<EventDTO> dtos = events.getContent().stream()
                 .map(eventoDTOMapper::toDTO)
                 .toList();
-        
+
         // Convertir Page del dominio a Page de Spring para la respuesta
         org.springframework.data.domain.Page<EventDTO> springPage = PageMapper.toSpring(
-                new Page<>(dtos, events.getPageNumber(), events.getPageSize(), events.getTotalElements())
-        );
-        
+                new Page<>(dtos, events.getPageNumber(), events.getPageSize(), events.getTotalElements()));
+
         return ResponseEntity.ok(springPage);
     }
 
@@ -79,7 +78,8 @@ public class EventoRestAdapter {
         return obtenerEventoUseCase.obtener(id)
                 .map(eventoDTOMapper::toDTO)
                 .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+                .orElseThrow(() -> new com.example.inmemoryeventsapi.dominio.exception.NotFoundException(
+                        "Evento no encontrado con id: " + id));
     }
 
     @PostMapping

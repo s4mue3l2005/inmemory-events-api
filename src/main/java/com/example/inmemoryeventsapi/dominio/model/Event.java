@@ -10,6 +10,7 @@ public class Event {
     private Long id;
     private String name;
     private LocalDate date;
+    private LocalDate endDate;
     private Long venueId;
     private Integer capacity;
     private Double price;
@@ -19,11 +20,12 @@ public class Event {
     public Event() {
     }
 
-    public Event(Long id, String name, LocalDate date, Long venueId, Integer capacity,
+    public Event(Long id, String name, LocalDate date, LocalDate endDate, Long venueId, Integer capacity,
             Double price, String category, String city) {
         this.id = id;
         this.name = name;
         this.date = date;
+        this.endDate = endDate;
         this.venueId = venueId;
         this.capacity = capacity;
         this.price = price;
@@ -54,6 +56,14 @@ public class Event {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public Long getVenueId() {
