@@ -23,4 +23,7 @@ public class VenueEntity {
 
     @Column(nullable = false)
     private Integer capacity;
+
+    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private java.util.List<EventEntity> events = new java.util.ArrayList<>();
 }

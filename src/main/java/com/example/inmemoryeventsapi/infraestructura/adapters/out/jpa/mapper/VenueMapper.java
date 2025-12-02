@@ -12,5 +12,6 @@ public interface VenueMapper {
 
     Venue toDomain(VenueEntity entity);
 
+    @org.mapstruct.Mapping(target = "events", ignore = true)
     VenueEntity toEntity(Venue domain);
 }
