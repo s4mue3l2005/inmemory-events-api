@@ -97,6 +97,7 @@ public class EventoRestAdapter {
     }
 
     @DeleteMapping("/{id}")
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         eliminarEventoUseCase.eliminar(id);
         return ResponseEntity.noContent().build();

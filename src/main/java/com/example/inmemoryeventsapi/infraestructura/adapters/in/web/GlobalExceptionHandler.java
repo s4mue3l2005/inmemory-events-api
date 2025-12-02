@@ -83,6 +83,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return createResponseEntity(problemDetail, headers, HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ProblemDetail handleAccessDeniedException(org.springframework.security.access.AccessDeniedException ex) {
+        log.warn("Access Denied: {}", ex.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.FORBIDDEN, "Access Denied");
+        problemDetail.setTitle("Forbidden");
+        problemDetail.setType(URI.create("https://example.com/errors/forbidden"));
+        enrichProblemDetail(problemDetail);
+        return problemDetail;
+    }
+
+    @ExceptionHandler(org.springframework.security.core.AuthenticationException.class)
+    public ProblemDetail handleAuthenticationException(org.springframework.security.core.AuthenticationException ex) {
+        log.warn("Authentication Failed: {}", ex.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, ex.getMessage());
+        problemDetail.setTitle("Unauthorized");
+        problemDetail.setType(URI.create("https://example.com/errors/unauthorized"));
+        enrichProblemDetail(problemDetail);
+        return problemDetail;
+    }
+
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGeneralException(Exception ex) {
         log.error("Internal Server Error", ex);
