@@ -20,6 +20,7 @@ class GlobalExceptionHandlerTest {
     private MockMvc mockMvc;
 
     @Test
+    @org.springframework.security.test.context.support.WithMockUser
     void whenResourceNotFound_thenReturnProblemDetail() throws Exception {
         mockMvc.perform(get("/events/999999")
                 .contentType(MediaType.APPLICATION_JSON))
