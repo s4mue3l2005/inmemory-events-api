@@ -9,6 +9,7 @@ import com.example.inmemoryeventsapi.dominio.model.Pageable;
 import com.example.inmemoryeventsapi.dominio.ports.in.*;
 import com.example.inmemoryeventsapi.dominio.ports.out.EventoRepositoryPort;
 import com.example.inmemoryeventsapi.dominio.ports.out.VenueRepositoryPort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.Optional;
  * Implementación de los casos de uso de eventos.
  * Contiene la lógica de negocio pura, sin dependencias de frameworks.
  */
+@Transactional(readOnly = true)
 public class EventoUseCaseImpl implements
         CrearEventoUseCase,
         ActualizarEventoUseCase,
@@ -34,6 +36,7 @@ public class EventoUseCaseImpl implements
 
     // CrearEventoUseCase
     @Override
+    @Transactional
     public Event ejecutar(Event event) {
         validarEvento(event);
 
@@ -47,6 +50,7 @@ public class EventoUseCaseImpl implements
 
     // ActualizarEventoUseCase
     @Override
+    @Transactional
     public Event ejecutar(Long id, Event event) {
         validarEvento(event);
 
@@ -77,6 +81,7 @@ public class EventoUseCaseImpl implements
 
     // EliminarEventoUseCase
     @Override
+    @Transactional
     public void eliminar(Long id) {
         if (!eventoRepository.existePorId(id)) {
             throw new NotFoundException("Evento con ID " + id + " no encontrado");
